@@ -24,7 +24,7 @@ app.use((req, res, next) => {
     }
 });
 
-app.get('/', (res: express.Response) => {
+app.get('/', (req: express.Request, res: express.Response) => {
     res.json({
         status: 'healthy',
         service: 'vianooga',
