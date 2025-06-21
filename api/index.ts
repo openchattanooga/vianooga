@@ -1,14 +1,14 @@
 import express from 'express';
 import { createServer } from 'http';
 
-import { HealthResponseType, ItineraryStepRequestType, ItineraryStepResponseType } from '../types';
+import { ItineraryStepRequestType, ItineraryStepResponseType } from '../types';
 import { mockItineraryResponse } from '../mocks/mock-response';
 
 const app = express();
 
 app.use(express.json());
 
-app.get('/', (req: express.Request, res: express.Response) => {
+app.get('/', (res: express.Response) => {
     res.json({
         status: 'healthy',
         service: 'vianooga',
@@ -16,7 +16,7 @@ app.get('/', (req: express.Request, res: express.Response) => {
     });
 });
 
-app.post('/itinerary/step', (req: express.Request<{}, {}, ItineraryStepRequestType['body']>, res: express.Response<ItineraryStepResponseType>) => {
+app.post('/itinerary', (req: express.Request<{}, {}, ItineraryStepRequestType['body']>, res: express.Response<ItineraryStepResponseType>) => {
     const { itinerary, targetDepartureTime, modes, maxWalkingDistance, maxBikingDistance, costPriority, timePriority } = req.body;
 
     console.log('Received itinerary request:', {
@@ -31,8 +31,6 @@ app.post('/itinerary/step', (req: express.Request<{}, {}, ItineraryStepRequestTy
 
     res.json(mockItineraryResponse);
 });
-
-
 
 async function findAvailablePort(startPort: number = 3000, endPort: number = 3100): Promise<number> {
     for (let port = startPort; port <= endPort; port++) {
