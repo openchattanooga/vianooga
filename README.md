@@ -6,7 +6,7 @@ An OSS platform for planning and traversing Chattanooga.
 ### Example Request
 
 ```bash
-curl -s -X POST http://vianooga.4rd.ai:3000/itinerary/step \
+curl -s -X POST http://vianooga.4rd.ai:3000/itinerary \
   -H "Content-Type: application/json" \
   -d '{
     "itinerary": [
