@@ -7,10 +7,22 @@ import { mockItineraryResponse } from '../mocks/mock-response';
 
 const app = express();
 const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
+    apiKey: process.env.OPENAI_API_KEY || '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',
 });
 
 app.use(express.json());
+
+// Enable CORS for the React app
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    if (req.method === 'OPTIONS') {
+        res.sendStatus(200);
+    } else {
+        next();
+    }
+});
 
 app.get('/', (res: express.Response) => {
     res.json({
@@ -141,6 +153,7 @@ Max biking distance: ${maxBikingDistance || 'unlimited'} meters`;
     };
 
     try {
+        console.log('Sending request to OpenAI with waypoints:', waypoints);
         const completion = await openai.chat.completions.create({
             model: "gpt-4o-mini",
             messages: [
@@ -159,10 +172,15 @@ Max biking distance: ${maxBikingDistance || 'unlimited'} meters`;
             top_p: 0.7,
         });
 
+        console.log('OpenAI raw response received');
         const responseData = JSON.parse(completion.choices[0].message.content || '{}');
+        console.log('Parsed response with', responseData.data?.choices?.length || 0, 'route choices');
         return responseData as ItineraryStepResponseType;
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error generating itinerary:', error);
+        if (error.response) {
+            console.error('OpenAI API error response:', error.response.data);
+        }
         return {
             status: 'error',
             error: 'Failed to generate itinerary'
@@ -184,14 +202,16 @@ app.post('/itinerary', async (req: express.Request<{}, {}, ItineraryStepRequestT
     // Check if we should use mock response (for development/testing)
     const useMock = process.env.USE_MOCK_RESPONSE === 'true';
     
-    if (useMock || !process.env.OPENAI_API_KEY) {
+    if (useMock) {
         console.log('Using mock response');
         res.json(mockItineraryResponse);
         return;
     }
 
     try {
+        console.log('Calling OpenAI API...');
         const response = await generateItinerary(req.body);
+        console.log('OpenAI response received');
         res.json(response);
     } catch (error) {
         console.error('Error in /itinerary endpoint:', error);
@@ -202,7 +222,7 @@ app.post('/itinerary', async (req: express.Request<{}, {}, ItineraryStepRequestT
     }
 });
 
-async function findAvailablePort(startPort: number = 3000, endPort: number = 3100): Promise<number> {
+async function findAvailablePort(startPort: number = 3001, endPort: number = 3100): Promise<number> {
     for (let port = startPort; port <= endPort; port++) {
         try {
             await new Promise<void>((resolve, reject) => {

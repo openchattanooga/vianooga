@@ -17,7 +17,7 @@
     "test": "test",
     "build": "tsc",
     "start:api": "node ./dist/api/index.js",
-    "start:web": "",
+    "start:web": "cd web && npm start",
     "start": "npm run build && concurrently \"npm run start:api\" \"npm run start:web\""
   },
   "repository": {
