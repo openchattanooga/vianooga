@@ -7,7 +7,7 @@ import { mockItineraryResponse } from '../mocks/mock-response';
 
 const app = express();
 const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY || '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',
+    apiKey: process.env.OPENAI_API_KEY,
 });
 
 app.use(express.json());
