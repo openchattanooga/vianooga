@@ -1,0 +1,40 @@
+{
+  "name": "vianooga",
+  "version": "0.1.0",
+  "description": "An app to get multi-modal travel data and general Chattanooga, TN traversal tips",
+  "keywords": [
+    "Chattanooga",
+    "Tennessee",
+    "Scenic",
+    "City",
+    "Summit"
+  ],
+  "homepage": "https://github.com/openchattanooga/vianooga#readme",
+  "bugs": {
+    "url": "https://github.com/openchattanooga/vianooga/issues"
+  },
+  "scripts": {
+    "test": "test",
+    "build": "tsc",
+    "start:api": "node ./dist/api/index.js",
+    "start:web": "",
+    "start": "concurrently \"npm run start:api\" \"npm run start:web\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openchattanooga/vianooga.git"
+  },
+  "license": "MIT",
+  "author": "Open Chattanooga",
+  "type": "commonjs",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.0.3",
+    "concurrently": "^9.1.2",
+    "typescript": "^5.8.3"
+  }
+}
