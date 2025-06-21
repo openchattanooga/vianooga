@@ -110,7 +110,8 @@ Max biking distance: ${maxBikingDistance || 'unlimited'} meters`;
                                                     "latitude": { "type": "number" },
                                                     "longitude": { "type": "number" }
                                                 },
-                                                "required": ["latitude", "longitude"]
+                                                "required": ["latitude", "longitude"],
+                                                "additionalProperties": false
                                             },
                                             "mode": {
                                                 "type": "string",
@@ -130,7 +131,8 @@ Max biking distance: ${maxBikingDistance || 'unlimited'} meters`;
                                             },
                                             "description": { "type": "string" }
                                         },
-                                        "required": ["address", "coordinates", "mode", "duration", "distance", "cost", "description"]
+                                        "required": ["address", "coordinates", "mode", "duration", "distance", "cost", "description"],
+                                        "additionalProperties": false
                                     }
                                 },
                                 "totalDuration": { "type": "number" },
@@ -141,11 +143,13 @@ Max biking distance: ${maxBikingDistance || 'unlimited'} meters`;
                                     "items": { "type": "string" }
                                 }
                             },
-                            "required": ["steps", "totalDuration", "totalDistance", "totalCost", "possibleStartTimes"]
+                            "required": ["steps", "totalDuration", "totalDistance", "totalCost", "possibleStartTimes"],
+                            "additionalProperties": false
                         }
                     }
                 },
-                "required": ["id", "choices"]
+                "required": ["id", "choices"],
+                "additionalProperties": false
             }
         },
         "required": ["status", "data"],
