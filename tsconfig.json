@@ -5,8 +5,8 @@
         "lib": [
             "ES2022"
         ],
-        "outDir": "./api/dist",
-        "rootDir": "./api/",
+        "outDir": "./dist",
+        "rootDir": "./",
         "strict": true,
         "esModuleInterop": true,
         "skipLibCheck": true,

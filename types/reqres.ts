@@ -1,4 +1,13 @@
 
+export type HealthResponseType = {
+    json: {
+        status: 'ok' | 'error';
+        service: string;
+        timestamp: string;
+        error?: string;
+    }
+};
+
 export type ItineraryStepRequestType = {
     method: 'POST';
     body: {

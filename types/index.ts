@@ -1,6 +1,7 @@
-import { ItineraryStepRequestType, ItineraryStepResponseType } from './reqres';
+import { HealthResponseType, ItineraryStepRequestType, ItineraryStepResponseType } from './reqres';
 
-export { 
+export {
+    HealthResponseType,
     ItineraryStepRequestType, 
     ItineraryStepResponseType
 }
