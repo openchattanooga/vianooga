@@ -40,7 +40,7 @@ const ItineraryForm = () => {
     setResponse(null);
 
     try {
-      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+      const apiUrl = 'http://vianooga.4rd.ai:3001';
       const res = await fetch(`${apiUrl}/itinerary`, {
         method: 'POST',
         headers: {
