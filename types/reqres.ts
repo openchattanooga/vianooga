@@ -1,6 +1,3 @@
-// 35.237.200.158:5432
-// user: postgres
-// password: Ardea09876
 
 export type ItineraryStepRequestType = {
     method: 'POST';
