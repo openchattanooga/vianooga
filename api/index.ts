@@ -62,19 +62,41 @@ Mode of transportation: drive, bike, walk, public transportation.
 Your task is to come up with possible routes that each satisfy every waypoint and cater to the user preferences.
 Each segment between waypoints may use any mode of transportation that the user input allows.
 
+CRITICAL REQUIREMENTS:
+- Use the EXACT coordinates provided in the input when building your response
+- Calculate realistic distances based on the actual geographic locations
+- For long distances (>50 miles), include multiple transportation segments (car to airport, flight, car from airport, etc.)
+- Provide realistic duration estimates based on actual travel times
+- Include realistic cost estimates for the transportation modes
+
 Output:
 3 route options
 
-IMPORTANT: You must respond with valid JSON that matches the provided schema exactly.`;
+IMPORTANT: You must respond with valid JSON that matches the provided schema exactly. Use the exact input coordinates in your step coordinates.`;
 
-    // Create user message
-    const userMessage = `Waypoints: ${waypoints}
+    // Create user message with detailed location info
+    const locationDetails = itinerary.map((step, index) => {
+        const parts = [];
+        if (step.name) parts.push(`Name: ${step.name}`);
+        if (step.address) parts.push(`Address: ${step.address}`);
+        if (step.coordinates) parts.push(`Coordinates: ${step.coordinates.latitude}, ${step.coordinates.longitude}`);
+        return `Stop ${index + 1}: ${parts.join(', ')}`;
+    }).join('\n');
+
+    const userMessage = `ROUTE REQUEST:
+
+LOCATIONS:
+${locationDetails}
+
+PREFERENCES:
 Scenic to Efficient: ${scenicToEfficient.toFixed(1)}
 Cheap to Expensive: ${cheapToExpensive.toFixed(1)}
-Modes: ${modes.map(m => m.toLowerCase()).join(', ')}
+Transportation modes allowed: ${modes.map(m => m.toLowerCase()).join(', ')}
 Target departure time: ${targetDepartureTime}
 Max walking distance: ${maxWalkingDistance || 'unlimited'} meters
-Max biking distance: ${maxBikingDistance || 'unlimited'} meters`;
+Max biking distance: ${maxBikingDistance || 'unlimited'} meters
+
+Please calculate the actual distance between these coordinates and provide realistic routing options.`;
 
     // Define JSON schema for the response
     const jsonSchema = {
